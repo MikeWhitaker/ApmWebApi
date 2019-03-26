@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APM.WebAPI", "APM.WebAPI\AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APM.WebAPI.Tests", "APM.WebAPI.Tests\APM.WebAPI.Tests.csproj", "{D22DB3F5-B525-4804-B350-5CA846CC868F}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "APM.Client", "APM.Client\APM.Client\", "{3C076201-B499-4DB3-9552-A1B71C89168C}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "APM.Client", "APM.Client\APM.Client", "{3C076201-B499-4DB3-9552-A1B71C89168C}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_50527"

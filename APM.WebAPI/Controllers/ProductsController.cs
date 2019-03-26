@@ -5,17 +5,25 @@ using System.Net.Http;
 using System.Net;
 using System.Web.Http;
 using System;
+using System.Web.Http.Cors;
 
 namespace APM.WebAPI.Controllers
 {
+    [EnableCorsAttribute("http://localhost:50527", "*", "*")]
     public class ProductsController : ApiController
     {
-        static Product productRepositry = new ProductRepository();
+        private ProductRepository productRepositry;
+
+        public ProductsController()
+        {
+            productRepositry = new ProductRepository();
+        }
+
+        
         // GET: api/Products
         public IEnumerable<Product> Get()
         {
-          var productRepositry = new ProductRepository();
-          return new string[] { "value1", "value2" };
+          return productRepositry.Retrieve();
         }
 
         // GET: api/Products/5
