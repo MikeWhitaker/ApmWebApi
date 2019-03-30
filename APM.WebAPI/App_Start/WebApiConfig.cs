@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +19,8 @@ namespace APM.WebAPI
 
       config.Routes.MapHttpRoute(
           name: "DefaultApi",
-          routeTemplate: "api/{controller}/{id}",
-          defaults: new { id = RouteParameter.Optional }
+          routeTemplate: "api/{controller}/{search}",
+          defaults: new { search = RouteParameter.Optional }
       );
     }
   }

@@ -9,42 +9,45 @@ using System.Web.Http.Cors;
 
 namespace APM.WebAPI.Controllers
 {
-    [EnableCorsAttribute("http://localhost:50527", "*", "*")]
-    public class ProductsController : ApiController
+  [EnableCorsAttribute("http://localhost:50527", "*", "*")]
+  public class ProductsController : ApiController
+  {
+    private ProductRepository productRepositry;
+
+    public ProductsController()
     {
-        private ProductRepository productRepositry;
-
-        public ProductsController()
-        {
-            productRepositry = new ProductRepository();
-        }
-
-        
-        // GET: api/Products
-        public IEnumerable<Product> Get()
-        {
-          return productRepositry.Retrieve();
-        }
-
-        // GET: api/Products/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/Products
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/Products/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Products/5
-        public void Delete(int id)
-        {
-        }
+      productRepositry = new ProductRepository();
     }
+
+
+    // GET: api/Products
+    public IEnumerable<Product> Get()
+    {
+      return productRepositry.Retrieve();
+    }
+
+    // GET: api/Products
+    public IEnumerable<Product> Get(String search)
+    {
+      var ListOfProducts = productRepositry.Retrieve();
+      var ListFilterdOnSearchCreteria = ListOfProducts.Where(s => s.ProductCode.StartsWith(search)); //filterd the list
+
+      return ListFilterdOnSearchCreteria;
+    }
+
+    // POST: api/Products
+    public void Post([FromBody]string value)
+    {
+    }
+
+    // PUT: api/Products/5
+    public void Put(int id, [FromBody]string value)
+    {
+    }
+
+    // DELETE: api/Products/5
+    public void Delete(int id)
+    {
+    }
+  }
 }
