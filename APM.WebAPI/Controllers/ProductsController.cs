@@ -6,6 +6,7 @@ using System.Net;
 using System.Web.Http;
 using System;
 using System.Web.Http.Cors;
+using System.Web.Http.OData;
 
 namespace APM.WebAPI.Controllers
 {
@@ -21,9 +22,12 @@ namespace APM.WebAPI.Controllers
 
 
     // GET: api/Products
-    public IEnumerable<Product> Get()
+    [EnableQuery]
+    public IQueryable<Product> Get()
     {
-      return productRepositry.Retrieve();
+      var fullListOfProducts = productRepositry.Retrieve();
+      var queryableReturnObject = fullListOfProducts.AsQueryable(); 
+      return queryableReturnObject;
     }
 
     // GET: api/Products
@@ -31,7 +35,6 @@ namespace APM.WebAPI.Controllers
     {
       var ListOfProducts = productRepositry.Retrieve();
       var ListFilterdOnSearchCreteria = ListOfProducts.Where(s => s.ProductCode.StartsWith(search)); //filterd the list
-
       return ListFilterdOnSearchCreteria;
     }
 
