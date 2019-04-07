@@ -30,22 +30,31 @@ namespace APM.WebAPI.Controllers
       return queryableReturnObject;
     }
 
-    // GET: api/Products
-    public IEnumerable<Product> Get(String search)
+    //GET: api/Products/5
+    public Product Get(int id)
     {
-      var ListOfProducts = productRepositry.Retrieve();
-      var ListFilterdOnSearchCreteria = ListOfProducts.Where(s => s.ProductCode.StartsWith(search)); //filterd the list
-      return ListFilterdOnSearchCreteria;
+      if(id == 0) // id is 0 so gererate a new product.
+      {
+        var newProductItem = productRepositry.Create();
+        return newProductItem;
+      }
+
+      // id is given so lookup the item in the repository.
+      var productList = productRepositry.Retrieve();
+      var queriedProduct = productList.FirstOrDefault(s => s.ProductId == id); //should be safe, as it should return only one item.
+      return queriedProduct;
     }
 
     // POST: api/Products
-    public void Post([FromBody]string value)
+    public void Post([FromBody]Product product)
     {
+      var createdProduct = productRepositry.Save(product);
     }
 
     // PUT: api/Products/5
-    public void Put(int id, [FromBody]string value)
+    public void Put(int id, [FromBody]Product product)
     {
+      var updatedProduct = productRepositry.Save(id, product);
     }
 
     // DELETE: api/Products/5

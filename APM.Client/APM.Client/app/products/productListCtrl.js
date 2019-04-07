@@ -19,10 +19,12 @@
     //  $top: 3
     //};
 
-    var queryParameter = {
-      $filter: "substringof('GDN', ProductCode) and Price lt 20",
-      $orderby: "Price"
-    };
+    //var queryParameter = {
+    //  $filter: "substringof('GDN', ProductCode) and Price lt 20",
+    //  $orderby: "Price"
+    //};
+
+    var queryParameter = {};
 
     //productResource.query(queryParameter, function (data) {
     productResource.query(queryParameter, function (data) {
