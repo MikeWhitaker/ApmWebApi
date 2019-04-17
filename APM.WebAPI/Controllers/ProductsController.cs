@@ -7,6 +7,7 @@ using System.Web.Http;
 using System;
 using System.Web.Http.Cors;
 using System.Web.Http.OData;
+using System.Web.Http.Description; //Add support for the responce type of the http
 
 namespace APM.WebAPI.Controllers
 {
@@ -23,38 +24,79 @@ namespace APM.WebAPI.Controllers
 
     // GET: api/Products
     [EnableQuery]
+    [ResponseType(typeof(Product))]
     public IQueryable<Product> Get()
     {
-      var fullListOfProducts = productRepositry.Retrieve();
-      var queryableReturnObject = fullListOfProducts.AsQueryable(); 
-      return queryableReturnObject;
+      try
+      {
+        var fullListOfProducts = productRepositry.Retrieve();
+        var queryableReturnObject = fullListOfProducts.AsQueryable();
+
+        return queryableReturnObject;
+      }
+      catch (Exception ex)
+      {
+        return (System.Linq.IQueryable<APM.WebAPI.Models.Product>) InternalServerError(ex);
+      }
     }
 
     //GET: api/Products/5
-    public Product Get(int id)
+    public IHttpActionResult Get(int id)
     {
-      if(id == 0) // id is 0 so gererate a new product.
+      try
       {
-        var newProductItem = productRepositry.Create();
-        return newProductItem;
-      }
+        if (id == 0) // id is 0 so gererate a new product.
+        {
+          var newProductItem = productRepositry.Create();
+          return Ok<Product>(newProductItem);
+        }
 
-      // id is given so lookup the item in the repository.
-      var productList = productRepositry.Retrieve();
-      var queriedProduct = productList.FirstOrDefault(s => s.ProductId == id); //should be safe, as it should return only one item.
-      return queriedProduct;
+        // id is given so lookup the item in the repository.
+        var productList = productRepositry.Retrieve();
+        var queriedProduct = productList.FirstOrDefault(s => s.ProductId == id);
+        if (queriedProduct == null)
+        {
+          return BadRequest();
+        }
+
+        return Ok(queriedProduct);
+      } catch (Exception ex)
+      {
+        return (System.Linq.IQueryable<APM.WebAPI.Models.Product>)InternalServerError(ex);
+      }
     }
 
     // POST: api/Products
-    public void Post([FromBody]Product product)
+    public IHttpActionResult Post([FromBody]Product product)
     {
+      if (product == null)
+      {
+        return BadRequest();
+      }
+
       var createdProduct = productRepositry.Save(product);
+      if(createdProduct == null)
+      {
+        return Conflict();
+      }
+
+      return Created<Product>(Request.RequestUri + createdProduct.ProductId.ToString(), createdProduct);
     }
 
     // PUT: api/Products/5
-    public void Put(int id, [FromBody]Product product)
+    public IHttpActionResult Put(int id, [FromBody]Product product)
     {
+      if(product == null)
+      {
+        return BadRequest();
+      }
+
       var updatedProduct = productRepositry.Save(id, product);
+      if(updatedProduct == null)
+      {
+        return Conflict();
+      }
+      return Ok();
     }
 
     // DELETE: api/Products/5
