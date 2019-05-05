@@ -62,7 +62,7 @@ namespace APM.WebAPI.Controllers
         return Ok(queriedProduct);
       } catch (Exception ex)
       {
-        return (System.Linq.IQueryable<APM.WebAPI.Models.Product>)InternalServerError(ex);
+        return InternalServerError(ex);
       }
     }
 
@@ -72,6 +72,11 @@ namespace APM.WebAPI.Controllers
       if (product == null)
       {
         return BadRequest();
+      }
+
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
       }
 
       var createdProduct = productRepositry.Save(product);
@@ -89,6 +94,11 @@ namespace APM.WebAPI.Controllers
       if(product == null)
       {
         return BadRequest();
+      }
+
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
       }
 
       var updatedProduct = productRepositry.Save(id, product);

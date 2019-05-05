@@ -11,7 +11,7 @@
     vm.product = {};
     vm.message = '';
 
-    productResource.get({ id: 55 },
+    productResource.get({ id: 5 },
       function (data) {
         vm.product = data;
         vm.originalProduct = angular.copy(data);
@@ -32,24 +32,33 @@
       vm.message = '';
       if (vm.product.productId) {
         vm.product.$update({ id: vm.product.productId },
-          function (data) {
-            vm.message = "... Save Complete";
-          },
-          displayReponceMessege(data)
+          saveMessage,
+          displayReponceMessege
         );
       } else {
         vm.product.$save(
-          function (data) {
-            vm.originalProduct = angular.copy(data);
-            vm.message = "... Same Complete";
-          },
-          displayReponceMessege(data)
+          saveMessage,
+          displayReponceMessege
         );
       }
     };
 
-    function displayReponceMessege(message) {
-      vm.message = message.statusText + "\r\n";
+    function saveMessage(data) {
+      vm.originalProduct = angular.copy(data);
+      vm.message = "... Save Complete";
+    }
+
+    function displayReponceMessege(responce) {
+      vm.message = responce.statusText + "\r\n";
+      if (responce.data.modelState) {
+        for (var key in responce.data.modelState) {
+          // interesting place to have a look at the data.
+          debugger;
+          vm.message += responce.data.modelState[key] + "\r\n";
+        }
+      }
+      if (responce.data.exceptionMessage)
+        vm.message += responce.data.exceptionMessage;
     }
 
     vm.cancel = function (editForm) {
