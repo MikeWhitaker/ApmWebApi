@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,9 +81,10 @@ namespace APM.WebAPI.Models
                 return null;
             }
 
-            WriteData(products); //Writes back all the products to the json file.
+            WriteData(products);
             return product;
         }
+
 
         private bool WriteData(List<Product> products)
         {

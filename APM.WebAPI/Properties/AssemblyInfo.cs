@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("APM.WebAPI")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("InStep Technologies, Inc.")]
 [assembly: AssemblyProduct("APM.WebAPI")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCopyright("Copyright © InStep Technologies, Inc. 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("60985069-4209-4a44-943c-ab2af38bd044")]
+[assembly: Guid("0d8ce5cb-3b23-41c0-8a9c-ff3a182c35cf")]
 
 // Version information for an assembly consists of the following four values:
 //
