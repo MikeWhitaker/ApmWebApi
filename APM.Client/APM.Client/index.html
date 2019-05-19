@@ -8,11 +8,37 @@
   <link href="Content/bootstrap.css" rel="stylesheet" />
 </head>
 
-<body ng-app="productManagement">
+<body ng-app="productManagement"
+      ng-controller="MainCtrl as vm">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
         <div class="navbar-brand">Acme Product Management</div>
+        <form ng-hide="vm.isLoggedIn" class="navbar-form navbar-right">
+          <div class="form-group">
+            <input type="text"
+                   class="form-control"
+                   placeholder="username (email)"
+                   ng-model="vm.userData.email" />
+          </div>
+          <div class="form-group">
+            <input type="password"
+                   class="form-control"
+                   placeholder="password"
+                   ng-model="vm.userData.password" />
+          </div>
+          <button ng-click="vm.login()"
+                  type="submit"
+                  class="btn btn-default">
+            Login
+          </button>
+          <button ng-click="vm.registerUser()"
+                  type="submit"
+                  class="btn btn-default">
+            Register
+          </button>
+          <div ng-show="vm.message">{{vm.message}}</div>
+        </form>
       </div>
     </div>
   </nav>
@@ -22,17 +48,20 @@
   </div>
 
   <!-- Library Scripts -->
+  <script src="Scripts/underscore.min.js"></script>
   <script src="scripts/angular.js"></script>
 
   <!-- Application Script -->
   <script src="app/app.js"></script>
   <script src="Scripts/angular-resource.js"></script>
   <!-- Product Controllers -->
+  <script src="app/mainCtrl.js"></script>
   <script src="app/common/common.services.js"></script>
   <script src="app/common/productResource.js"></script>
   <script src="app/products/productEditCtrl.js"></script>
   <!-- Services -->
   <script src="app/products/productListCtrl.js"></script>
+  <script src="app/common/userAccount.js"></script>
   <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>
 
